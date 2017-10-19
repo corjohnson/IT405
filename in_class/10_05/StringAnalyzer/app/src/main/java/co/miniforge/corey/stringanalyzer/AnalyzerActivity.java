@@ -6,9 +6,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.BarGraphSeries;
-import com.jjoe64.graphview.series.DataPoint;
 
 public class AnalyzerActivity extends AppCompatActivity {
 
@@ -17,7 +14,14 @@ public class AnalyzerActivity extends AppCompatActivity {
     TextView messageTextView;
     Button backToInputButton;
 
-    GraphView graphView;
+    TextAnalyzerUtil textUtil;
+
+    TextView uniqueWords;
+    TextView characterCount;
+    TextView wordCount;
+    TextView uniqueCharacters;
+    TextView longestWord;
+    TextView specialCharactersCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,8 @@ public class AnalyzerActivity extends AppCompatActivity {
 
         getIntentData();
 
+        textUtil = new TextAnalyzerUtil(message);
+
         locateViews();
 
         bindData();
@@ -33,7 +39,12 @@ public class AnalyzerActivity extends AppCompatActivity {
 
     void locateViews() {
         this.messageTextView = (TextView) findViewById(R.id.messageTextView);
-        this.graphView = (GraphView) findViewById(R.id.graphView);
+        this.characterCount = (TextView) findViewById(R.id.characterCount);
+        this.wordCount = (TextView) findViewById(R.id.wordCount);
+        this.uniqueCharacters = (TextView) findViewById(R.id.uniqueCharacters);
+        this.uniqueWords = (TextView) findViewById(R.id.uniqueWords);
+        this.longestWord = (TextView) findViewById(R.id.longestWord);
+        this.specialCharactersCount = (TextView) findViewById(R.id.specialCharactersCount);
         this.backToInputButton = (Button) findViewById(R.id.backToInputButton);
     }
 
@@ -48,13 +59,9 @@ public class AnalyzerActivity extends AppCompatActivity {
     void bindData(){
         messageTextView.setText(message);
 
-
-
-        BarGraphSeries<DataPoint> barSeries = new BarGraphSeries<>(new DataPoint[] {
-                new DataPoint(0, 2),
-                new DataPoint(2, 1)
-        });
-
-        this.graphView.addSeries(barSeries);
+        characterCount.setText(String.format("Character Count: %d", textUtil.getTextCharacterCount()));
+        wordCount.setText(String.format("Word Count: %d", textUtil.getWordCount()));
+        uniqueCharacters.setText(String.format("Unique Characters: %d", textUtil.getUniqueCharacters()));
+        specialCharactersCount.setText(String.format("Special Characters: %d", textUtil.getSpecialCharacterCount()));
     }
 }
