@@ -32,7 +32,7 @@ public class InputActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), TextAnalyzerUtil.class);
+                Intent intent = new Intent(getApplicationContext(), AnalyzerActivity.class);
                 intent.putExtra(intentTag, input.getText().toString());
                 startActivity(intent);
             }
