@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -28,6 +30,15 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 //Log.i("HELLO", helper.getData("https://wt-009118fe5913a9a73c82768e11abf7ea-0.run.webtask.io/greeter"));
                 String s = helper.getData("http://www.recipepuppy.com/api/?q=apple");
+
+                try {
+                    JSONObject json = new JSONObject(s);
+
+                    Log.i("TEST", json.getString("title"));
+                } catch (Exception e){
+
+                }
+
                 Log.i("TEST", s);
 
                 Toast.makeText(getApplicationContext(),
