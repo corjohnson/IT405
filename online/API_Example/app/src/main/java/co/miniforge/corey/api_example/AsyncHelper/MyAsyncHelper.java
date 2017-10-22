@@ -1,7 +1,8 @@
-package co.miniforge.corey.api_example;
+package co.miniforge.corey.api_example.AsyncHelper;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -12,6 +13,18 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 public class MyAsyncHelper {
+    ConnectionType connectionType;
+    RequestType requestType;
+
+    public MyAsyncHelper(ConnectionType type, RequestType requestType){
+        this.connectionType = type;
+        this.requestType = requestType;
+    }
+
+    public void updateTextviewFromUrl(String url, TextView textView){
+
+    }
+
     public String getData(String url){
         try {
             return new MyAsyncTask().execute(url).get();
@@ -32,11 +45,14 @@ public class MyAsyncHelper {
 
             try {
                 URL url = new URL(stringURL);
-                conn = (HttpURLConnection) url.openConnection();
+                conn = connectionType == ConnectionType.HttpsConnection ?
+                        (HttpsURLConnection) url.openConnection() :
+                        (HttpURLConnection) url.openConnection();
 
                 if(conn == null) return "";
 
-                conn.setRequestMethod("GET");
+                conn.setRequestMethod(requestType == RequestType.GET ?
+                                        "GET" : "POST");
                 conn.connect();
 
                 // Read the input stream into a String
