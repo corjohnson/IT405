@@ -48,14 +48,13 @@ public class SignInFragment extends Fragment {
 
     void bindData() {
         if(loginButton != null){
-            final Fragment fragment = this;
-
             loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    Intent intent = new Intent(view.getContext(), HomeContentActivity.class);
-                    view.getContext().startActivity(intent);
+                    MainActivity mainActivity = (MainActivity)view.getContext();
+                    if(mainActivity != null){
+                        mainActivity.login(username.getText().toString());
+                    }
                 }
             });
         }
