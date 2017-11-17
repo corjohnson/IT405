@@ -35,4 +35,10 @@ public class MainActivity extends AppCompatActivity {
         handler.post(changeText);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        changeText.stopRunnable();
+    }
 }
