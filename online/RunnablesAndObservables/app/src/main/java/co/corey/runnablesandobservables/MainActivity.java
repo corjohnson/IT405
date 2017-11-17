@@ -1,6 +1,7 @@
 package co.corey.runnablesandobservables;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -29,17 +30,9 @@ public class MainActivity extends AppCompatActivity {
         message = findViewById(R.id.message);
         editText = findViewById(R.id.editText);
 
-        changeText = new ChangeTextRunnable(message, "Time for root beer");
-
-        button = findViewById(R.id.button);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeText.updateMessage("Woah, this will work!");
-                changeText.run();
-            }
-        });
+        Handler handler = new Handler();
+        changeText = new ChangeTextRunnable(message, editText, handler);
+        handler.post(changeText);
     }
 
 }
