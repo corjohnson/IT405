@@ -8,6 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -35,6 +36,42 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        makeJSONObjectRequest();
+    }
+
+    void makeJSONObjectRequest(){
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                api_url,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            //Get the json array from results
+                            JSONArray resultsArray = response.getJSONArray("results");
+
+                            //Pull the first json object from the array
+                            JSONObject firstObject = resultsArray.getJSONObject(0);
+
+                            responseText.setText(firstObject.toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        responseText.setText("Something went wrong!");
+                    }
+                }
+        );
+
+        queue.add(jsonObjectRequest);
+    }
+
+    void makeStringRequest(){
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET,
                 api_url,
