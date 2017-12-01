@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     void makeJSONObjectRequest(){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
-                api_url,
+                new RequestBuilder().addIngredients("onions", "garlic").setQueryParam("pizza").build(),
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
