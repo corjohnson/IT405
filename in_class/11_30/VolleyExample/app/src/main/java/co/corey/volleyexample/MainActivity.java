@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        responseText = findViewById(R.id.responseText);
+        //responseText = findViewById(R.id.responseText);
         queue = Volley.newRequestQueue(getApplicationContext());
     }
 
@@ -55,7 +55,11 @@ public class MainActivity extends AppCompatActivity {
 
                             List<Recipe> recipeList = Recipe.recipesForJSONArray(resultsArray);
 
-                            responseText.setText(recipeList.get(0).title);
+                            ((RecipeListFragment)
+                                    getFragmentManager().findFragmentById(R.id.recipeFragment))
+                                    .updateData(recipeList);
+
+                            //responseText.setText(recipeList.get(0).title);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
