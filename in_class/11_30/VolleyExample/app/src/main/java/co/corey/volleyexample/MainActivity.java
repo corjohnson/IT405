@@ -16,6 +16,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView responseText;
@@ -51,10 +53,9 @@ public class MainActivity extends AppCompatActivity {
                             //Get the json array from results
                             JSONArray resultsArray = response.getJSONArray("results");
 
-                            //Pull the first json object from the array
-                            JSONObject firstObject = resultsArray.getJSONObject(0);
+                            List<Recipe> recipeList = Recipe.recipesForJSONArray(resultsArray);
 
-                            responseText.setText(firstObject.toString());
+                            responseText.setText(recipeList.get(0).title);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
